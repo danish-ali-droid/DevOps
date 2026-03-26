@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podman Containers – A4 Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            color: #000000;
+            font-size: 11pt;
+            line-height: 1.55;
+            width: 210mm;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .a4-page {
+            width: 100%;
+            background: white;
+            padding: 15mm 17mm 15mm 17mm;
+            box-shadow: none;
+            page-break-after: always;
+            min-height: 297mm;
+        }
+
+        @media print {
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .a4-page {
+                padding: 15mm 17mm 15mm 17mm;
+                page-break-after: always;
+                min-height: auto;
+            }
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+            table, pre, .code-block, .example-box, .diagram {
+                page-break-inside: avoid;
+            }
+        }
+
+        h1 {
+            font-size: 28pt;
+            font-weight: 800;
+            text-align: center;
+            border: 4px solid #000;
+            padding: 0.8rem 0.5rem;
+            margin: 0 0 1.5rem 0;
+            background: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 18pt;
+            font-weight: 700;
+            border-bottom: 3px solid #000;
+            padding-bottom: 0.2rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        h3 {
+            font-size: 14pt;
+            font-weight: 600;
+            margin: 1.2rem 0 0.6rem;
+            border-left: 5px solid #000;
+            padding-left: 0.7rem;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 600;
+            margin: 1rem 0 0.4rem;
+        }
+
+        p, li, .caption {
+            font-size: 11pt;
+            margin-bottom: 0.4rem;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            border: 2px solid #000;
+            font-size: 10.5pt;
+        }
+
+        th {
+            font-weight: 700;
+            border: 1px solid #000;
+            padding: 6px 5px;
+            text-align: left;
+            background: #fff;
+        }
+
+        td {
+            border: 1px solid #000;
+            padding: 6px 5px;
+            vertical-align: top;
+            background: #fff;
+        }
+
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f9f9f9;
+            border: 1.5px solid #000;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            font-size: 10pt;
+            white-space: pre-wrap;
+            page-break-inside: avoid;
+        }
+
+        .example-box {
+            border: 2px solid #000;
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
+            background: #fff;
+        }
+
+        .diagram {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9.5pt;
+            background: #ffffff;
+            border: 2px solid #000;
+            padding: 1rem;
+            margin: 1.2rem 0;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.25;
+            page-break-inside: avoid;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #000;
+            margin: 1rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            border: 1px solid #000;
+            background: #fff;
+            font-weight: 700;
+            padding: 0.1rem 0.5rem;
+            margin-right: 0.3rem;
+            font-size: 9pt;
+        }
+
+        strong {
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="a4-page">
+    <h1>PODMAN CONTAINERS<br>MANAGEMENT & ORCHESTRATION</h1>
+
+    <h2>1. What is Podman?</h2>
+    <p>Podman (Pod Manager) is a daemonless, open-source container engine for developing, managing, and running OCI containers. It provides a Docker-compatible command line interface but runs without a central daemon, offering better security and rootless operation capabilities.</p>
+    
+    <div class="diagram">
+Podman Architecture:
+┌─────────────────────────────────────────────────────────────┐
+│                      USER SPACE                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              podman command (CLI)                   │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│                           ▼                                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │           conmon (container monitor)                │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│                           ▼                                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │           runc / crun (OCI runtime)                 │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│                           ▼                                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              Container Processes                    │   │
+│  │           (direct child of podman)                  │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+    </div>
+
+    <h2>2. Install Podman</h2>
+    <div class="code-block">
+# Fedora / RHEL / CentOS
+sudo dnf install podman
+
+# Debian / Ubuntu
+sudo apt install podman
+
+# Verify installation
+podman --version
+podman info
+    </div>
+
+    <h2>3. Manage Podman Containers</h2>
+    <h3>3.1 Basic Container Operations</h3>
+    <div class="code-block">
+# Pull an image
+podman pull nginx:latest
+podman pull docker.io/library/alpine:latest
+
+# Run a container
+podman run -d --name mynginx -p 8080:80 nginx
+podman run -it --name alpine-shell alpine sh
+
+# List containers
+podman ps                 # running containers
+podman ps -a              # all containers
+podman ps -a --size       # with size information
+
+# Start/Stop/Restart containers
+podman start mynginx
+podman stop mynginx
+podman restart mynginx
+
+# Remove containers
+podman rm mynginx
+podman rm -f mynginx      # force remove running container
+
+# Remove all stopped containers
+podman container prune
+    </div>
+
+    <h2>4. Container Tools: Inspect, Copy, Tag, Push, Pull</h2>
+    
+    <h3>4.1 Inspect Container/Image</h3>
+    <div class="code-block">
+# Inspect container details (JSON format)
+podman inspect mynginx
+podman inspect --format '{{.NetworkSettings.IPAddress}}' mynginx
+
+# Inspect image
+podman inspect nginx:latest
+podman image inspect alpine --format '{{.Created}}'
+
+# Get container logs
+podman logs mynginx
+podman logs --tail 50 mynginx
+    </div>
+
+    <h3>4.2 Copy Files Between Host and Container</h3>
+    <div class="code-block">
+# Copy file from host to container
+podman cp /home/user/index.html mynginx:/usr/share/nginx/html/
+
+# Copy file from container to host
+podman cp mynginx:/etc/nginx/nginx.conf ./nginx.conf
+
+# Copy directory recursively
+podman cp ./website/ mynginx:/usr/share/nginx/html/
+    </div>
+
+    <h3>4.3 Tag, Pull, and Push Images</h3>
+    <div class="code-block">
+# Tag an image
+podman tag nginx:latest myregistry.com/mynginx:v1.0
+podman tag local-image:latest username/myapp:1.0
+
+# List images
+podman images
+podman image ls
+
+# Push image to registry
+podman push myregistry.com/mynginx:v1.0
+podman push username/myapp:1.0 docker://docker.io/username/myapp:1.0
+
+# Pull image from registry
+podman pull myregistry.com/mynginx:v1.0
+podman pull docker.io/ubuntu:22.04
+
+# Login to container registry
+podman login docker.io
+podman login myregistry.com -u username -p password
+    </div>
+
+    <h2>5. Managing and Modifying Containers</h2>
+    <div class="code-block">
+# Execute command inside running container
+podman exec -it mynginx bash
+podman exec mynginx ls -la /etc/nginx
+
+# Update container environment variables
+podman run -d --name myapp -e ENV=production -e DEBUG=false nginx
+
+# Modify container resource limits
+podman update --cpus=2 --memory=2g mynginx
+
+# Export/Import containers
+podman export mynginx > mynginx.tar
+podman import mynginx.tar mynginx:new
+
+# Commit container to image
+podman commit mynginx mynginx-custom:latest
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="a4-page">
+    <h2>6. Rootfull Container vs Rootless Container</h2>
+    
+    <div class="diagram">
+Rootfull vs Rootless Comparison:
+┌─────────────────────────────────────────────────────────────┐
+│  Rootfull Container          │  Rootless Container         │
+│  ┌─────────────────────┐    │  ┌─────────────────────┐    │
+│  │ Container runs as   │    │  │ Container runs as  │    │
+│  │ root (UID 0)        │    │  │ non-root user      │    │
+│  │ inside container    │    │  │ mapped to host UID │    │
+│  └─────────────────────┘    │  └─────────────────────┘    │
+│            │                 │            │                 │
+│            ▼                 │            ▼                 │
+│  ┌─────────────────────┐    │  ┌─────────────────────┐    │
+│  │ Runs with root      │    │  │ Runs with user     │    │
+│  │ privileges on host  │    │  │ namespaces         │    │
+│  │ (UID 0 mapping)     │    │  │ (subordinate IDs)  │    │
+│  └─────────────────────┘    │  └─────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+    </div>
+
+    <h3>6.1 Rootfull Container</h3>
+    <p>Rootfull containers run with root privileges inside the container, and the root user inside the container maps to root (UID 0) on the host. This requires sudo privileges to run.</p>
+    <div class="code-block">
+# Run rootfull container (requires sudo or root user)
+sudo podman run -d --name rootfull-nginx nginx
+sudo podman run -it --name rootfull-shell alpine sh
+
+# Check container user (will show root)
+sudo podman exec rootfull-nginx whoami
+    </div>
+
+    <h3>6.2 Rootless Container</h3>
+    <p>Rootless containers run without root privileges. The container's root user is mapped to a non-privileged user on the host using user namespaces. This is the default mode for podman when run as a regular user.</p>
+    <div class="code-block">
+# Run rootless container (as regular user)
+podman run -d --name rootless-nginx nginx
+podman run -it --name rootless-shell alpine sh
+
+# Check user mapping
+podman unshare cat /proc/self/uid_map
+podman exec rootless-nginx whoami   # Shows "root" inside container
+    </div>
+
+    <h3>6.3 Difference Between Rootfull and Rootless Containers</h3>
+    <table>
+        <tr><th>Feature</th><th>Rootfull Container</th><th>Rootless Container</th>  </tr>
+        <tr><td>Privilege Required</td><td>Requires sudo or root user</td><td>Can run as regular user</td> </tr>
+        <tr><td>UID Mapping</td><td>Container root = Host root (UID 0)</td><td>Container root mapped to host non-root UID</td> </tr>
+        <tr><td>Security</td><td>Higher risk, container escape grants host root</td><td>More secure, container escape only grants user privileges</td> </tr>
+        <tr><td>Network</td><td>Can use host network, privileged ports (<1024)</td><td>Cannot bind to privileged ports, uses slirp4netns</td> </tr>
+        <tr><td>Storage</td><td>Can access any host directory</td><td>Limited to user's home directory and mounted storage</td> </tr>
+        <tr><td>Performance</td><td>Slightly better (no namespace overhead)</td><td>Minimal overhead from user namespaces</td> </tr>
+        <tr><td>Use Case</td><td>Production servers, system-level containers</td><td>Development, CI/CD, multi-tenant environments</td> </tr>
+      </table>
+
+    <h2>7. How to Run Podman SQL Container (MySQL/PostgreSQL)</h2>
+    <div class="code-block">
+# Run MySQL container
+podman run -d \
+  --name mysql-db \
+  -e MYSQL_ROOT_PASSWORD=mysecretpassword \
+  -e MYSQL_DATABASE=mydb \
+  -e MYSQL_USER=myuser \
+  -e MYSQL_PASSWORD=mypassword \
+  -p 3306:3306 \
+  docker.io/mysql:8.0
+
+# Connect to MySQL
+podman exec -it mysql-db mysql -u root -p
+
+# Run PostgreSQL container
+podman run -d \
+  --name postgres-db \
+  -e POSTGRES_USER=myuser \
+  -e POSTGRES_PASSWORD=mypassword \
+  -e POSTGRES_DB=mydb \
+  -p 5432:5432 \
+  docker.io/postgres:15
+
+# Connect to PostgreSQL
+podman exec -it postgres-db psql -U myuser -d mydb
+    </div>
+
+    <h2>8. Running Containers Under Systemd</h2>
+    <p>Podman can generate systemd unit files to manage containers as system services.</p>
+    <div class="code-block">
+# Generate systemd unit file for existing container
+podman generate systemd --new --name mynginx > /etc/systemd/system/container-mynginx.service
+
+# Or for rootless containers (user systemd)
+mkdir -p ~/.config/systemd/user
+podman generate systemd --new --name mynginx > ~/.config/systemd/user/container-mynginx.service
+
+# Enable and start service
+sudo systemctl daemon-reload
+sudo systemctl enable container-mynginx.service
+sudo systemctl start container-mynginx.service
+
+# For rootless
+systemctl --user daemon-reload
+systemctl --user enable container-mynginx.service
+systemctl --user start container-mynginx.service
+
+# Check status
+sudo systemctl status container-mynginx.service
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="a4-page">
+    <h2>9. Using Pods with Podman</h2>
+    <p>Pods are groups of one or more containers that share network namespace, IPC, and PID namespace. This is similar to Kubernetes pods.</p>
+    
+    <div class="diagram">
+Podman Pod Architecture:
+┌─────────────────────────────────────────────────────────────┐
+│                      POD (shared namespace)                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              Infra Container (pause)                │   │
+│  │              - Holds network namespace              │   │
+│  │              - Keeps pod alive                      │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│      ┌────────────────────┼────────────────────┐           │
+│      ▼                    ▼                    ▼           │
+│ ┌──────────┐       ┌──────────┐       ┌──────────┐        │
+│ │  nginx   │       │   php    │       │  redis   │        │
+│ │container │       │container │       │container │        │
+│ └──────────┘       └──────────┘       └──────────┘        │
+│   port 80            port 9000          port 6379          │
+└─────────────────────────────────────────────────────────────┘
+    </div>
+
+    <div class="code-block">
+# Create a new pod
+podman pod create --name webapp-pod -p 8080:80
+
+# List pods
+podman pod list
+podman pod ps
+
+# Add containers to pod
+podman run -d --pod webapp-pod --name nginx-container nginx
+podman run -d --pod webapp-pod --name php-container php:apache
+podman run -d --pod webapp-pod --name redis-container redis
+
+# Inspect pod
+podman pod inspect webapp-pod
+
+# Execute command in pod (affects all containers)
+podman pod top webapp-pod
+
+# Stop and remove pod (removes all containers)
+podman pod stop webapp-pod
+podman pod rm webapp-pod
+
+# Create pod with specific settings
+podman pod create \
+  --name db-pod \
+  --share net,ipc,uts \
+  -p 5432:5432 \
+  -p 3306:3306
+    </div>
+
+    <h2>10. Build Images Using Podman and Buildah</h2>
+    <p>Buildah is a tool for building OCI container images without requiring a container daemon. It works alongside Podman.</p>
+    
+    <h3>10.1 Building with Podman (using Containerfile/Dockerfile)</h3>
+    <div class="code-block">
+# Create a Containerfile
+cat > Containerfile << 'EOF'
+FROM docker.io/alpine:latest
+LABEL maintainer="dev@example.com"
+RUN apk add --no-cache nginx
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+EOF
+
+# Build image
+podman build -t my-custom-nginx:latest .
+podman build -t myapp:v1.0 -f Containerfile .
+
+# Build with build arguments
+podman build --build-arg VERSION=1.0 -t myapp:latest .
+    </div>
+
+    <h3>10.2 Building with Buildah</h3>
+    <div class="code-block">
+# Install buildah
+sudo dnf install buildah
+
+# Create new container (working container)
+buildah from alpine
+
+# Mount the container
+buildah mount alpine-working-container
+
+# Run commands inside container
+buildah run alpine-working-container apk add --no-cache nginx
+
+# Copy files
+buildah copy alpine-working-container ./index.html /var/www/html/
+
+# Set configuration
+buildah config --port 80 alpine-working-container
+buildah config --cmd "nginx -g 'daemon off;'" alpine-working-container
+
+# Commit to image
+buildah commit alpine-working-container my-custom-alpine:latest
+
+# List images
+buildah images
+    </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="a4-page">
+    <h2>11. Complete Example: Pull, Push, and Run Container</h2>
+    <p>This example demonstrates a complete workflow: pulling an image, running a container, modifying it, tagging, and pushing to a registry.</p>
+    
+    <div class="example-box">
+        <strong>Scenario:</strong> Create a custom Nginx container with a custom index page, then push it to Docker Hub.
+    </div>
+    
+    <div class="code-block">
+# Step 1: Pull base image
+podman pull docker.io/library/nginx:alpine
+
+# Step 2: Create custom index page
+cat > index.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head><title>Custom Nginx</title></head>
+<body>
+<h1>Hello from Podman Container!</h1>
+<p>This is a custom built container.</p>
+</body>
+</html>
+EOF
+
+# Step 3: Run container and copy custom page
+podman run -d --name custom-nginx -p 8080:80 nginx:alpine
+podman cp index.html custom-nginx:/usr/share/nginx/html/
+
+# Step 4: Commit container to new image
+podman commit custom-nginx my-nginx:custom
+
+# Step 5: Tag image for registry
+podman tag my-nginx:custom docker.io/yourusername/my-nginx:latest
+podman tag my-nginx:custom docker.io/yourusername/my-nginx:v1.0
+
+# Step 6: Login to Docker Hub
+podman login docker.io -u yourusername
+
+# Step 7: Push image to registry
+podman push docker.io/yourusername/my-nginx:latest
+podman push docker.io/yourusername/my-nginx:v1.0
+
+# Step 8: Stop and remove local container
+podman stop custom-nginx
+podman rm custom-nginx
+
+# Step 9: Pull and run from registry on another machine
+podman pull docker.io/yourusername/my-nginx:latest
+podman run -d --name deployed-nginx -p 8080:80 yourusername/my-nginx:latest
+
+# Step 10: Verify
+curl http://localhost:8080
+    </div>
+
+    <h3>11.1 Example with Buildah (Image Building)</h3>
+    <div class="code-block">
+# Create working container
+container=$(buildah from docker.io/alpine:latest)
+
+# Install packages
+buildah run $container apk add --no-cache nginx curl
+
+# Create custom configuration
+cat > nginx.conf << 'EOF'
+server {
+    listen 80;
+    server_name localhost;
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+    }
+}
+EOF
+
+# Copy files
+buildah copy $container nginx.conf /etc/nginx/conf.d/default.conf
+
+# Create custom index page
+echo "<h1>Built with Buildah!</h1>" > index.html
+buildah copy $container index.html /usr/share/nginx/html/
+
+# Configure container
+buildah config --port 80 $container
+buildah config --cmd "nginx -g 'daemon off;'" $container
+
+# Commit image
+buildah commit $container yourusername/buildah-nginx:latest
+
+# Push to registry
+podman push yourusername/buildah-nginx:latest docker://docker.io/yourusername/buildah-nginx:latest
+
+# Clean up working container
+buildah rm $container
+    </div>
+
+    <h3>11.2 Example with Pod (Multi-Container Application)</h3>
+    <div class="code-block">
+# Create a pod for web application
+podman pod create --name webapp-pod -p 8080:80 -p 8081:8080
+
+# Run web server container
+podman run -d --pod webapp-pod --name webserver nginx:alpine
+
+# Run application container (custom app)
+podman run -d --pod webapp-pod --name app-container alpine sh -c "while true; do echo 'App running' >> /var/log/app.log; sleep 5; done"
+
+# Run database container
+podman run -d --pod webapp-pod --name database --env MYSQL_ROOT_PASSWORD=secret mysql:8.0
+
+# Check pod status
+podman pod ps
+podman pod inspect webapp-pod
+
+# Access services
+curl http://localhost:8080
+    </div>
+
+    <h3>11.3 Cleanup Commands</h3>
+    <div class="code-block">
+# Remove containers
+podman rm -f custom-nginx deployed-nginx webserver app-container database
+
+# Remove pod
+podman pod rm -f webapp-pod
+
+# Remove images
+podman rmi my-nginx:custom
+podman rmi yourusername/my-nginx:latest
+podman rmi yourusername/buildah-nginx:latest
+
+# Remove all unused containers, images, and networks
+podman system prune -a
+    </div>
+
+    <hr>
+</div>
+
+</body>
+</html>
