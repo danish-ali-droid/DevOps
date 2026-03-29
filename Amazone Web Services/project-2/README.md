@@ -6,16 +6,17 @@ This project demonstrates a highly secure, **Dual-Stack (IPv4/IPv6)** VPC archit
 
 ## 🏗️ Architecture Overview
 
-The infrastructure consists of a custom VPC with both public and private subnets across a single Availability Zone (eu-north-1a).
+The infrastructure consists of a custom VPC with both public and private subnets across a single Availability Zone (**eu-north-1a**).
 
 ![Architecture Diagram](architecture-diagram.png)
+*(Is diagram mein Dual-Stack flow aur private instance connectivity ko samjha ja sakta hai)*.
 
 ### Key Components:
 * **VPC:** CIDR `10.0.0.0/16` with Amazon-provided IPv6.
 * **Public Subnet:** Hosts the **NAT Gateway** to facilitate IPv4 traffic for private instances.
 * **Private Subnet:** Hosts **Instance B (Server)** with no public IPv4 address.
 * **Egress-Only Internet Gateway (EIGW):** Provides secure, outbound-only IPv6 connectivity.
-* **AWS Systems Manager (SSM):** Used for secure terminal access (Session Manager) without needing a Bastion Host or SSH port 22.
+* **AWS Systems Manager (SSM):** Used for secure terminal access without needing a Bastion Host or SSH port 22.
 
 ---
 
@@ -42,30 +43,25 @@ Verified that IPv6 traffic is flowing correctly through the EIGW to external glo
 > **Result:** 0% packet loss, Avg RTT ~3.8ms.
 
 ### ✅ IPv4 Connectivity (via NAT Gateway)
-The instance successfully communicates with IPv4 repositories to perform system updates and package installations.
+The instance successfully communicates with IPv4 repositories to perform system updates.
 > **Command:** `sudo apt update`
 > **Result:** Successfully fetched packages from `eu-north-1.ec2.archive.ubuntu.com`.
 
 ---
 
-## 📸 Project Evidence
+## 📸 Project Evidence (Visualized)
 
-<details>
-<summary>Click to view Screenshots</summary>
-
-#### VPC Resource Mapping
+#### 1. VPC Resource Mapping
 Visualizing the link between Subnets, Route Tables, and Gateways.
 ![VPC Map](vpc.png)
 
-#### IPv6 Connectivity Success
+#### 2. IPv6 Connectivity Success
 Proof of Egress-Only Gateway functioning correctly from the private instance terminal.
 ![IPv6 Test](ipv6tst-through-eigw.png)
 
-#### Private Outbound IPv4 Update
+#### 3. Private Outbound IPv4 Update
 Instance B updating system packages via NAT Gateway.
 ![NAT Test](Private%20Route%20Table%20-%3E%20NAT%20Gateway%20-%3E%20Internet%20Gateway-tst.png)
-
-</details>
 
 ---
 
