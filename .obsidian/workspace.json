@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "4a641f1bd8aa435f",
+        "id": "b6a0974d468ba17f",
         "type": "tabs",
         "children": [
           {
-            "id": "6ddc87a46c36822c",
+            "id": "f2c6a90b0d9143f0",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -177,8 +177,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6ddc87a46c36822c",
+  "active": "f2c6a90b0d9143f0",
   "lastOpenFiles": [
+    "Amazone Web Services/project-2/README.md",
+    "Amazone Web Services/project-2/Private Route Table -> NAT Gateway -> Internet Gateway-tst.png",
+    "Amazone Web Services/project-2/README.md~",
     "conflict-files-obsidian-git.md"
   ]
 }
