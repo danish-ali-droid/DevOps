@@ -1,6 +1,6 @@
 # 🚀 AWS High-Availability & Scalable Two-Tier Architecture
 
-This project demonstrates a production-ready, **Highly Available (HA)** web infrastructure deployed on AWS. It focuses on eliminate single points of failure by using a multi-AZ strategy, automated scaling, and secure network partitioning between public and private tiers.
+This project demonstrates a production-ready, **Highly Available (HA)** web infrastructure deployed on AWS. It focuses on eliminating single points of failure by using a multi-AZ strategy, automated scaling, and secure network partitioning between public and private tiers.
 
 ---
 
@@ -8,7 +8,9 @@ This project demonstrates a production-ready, **Highly Available (HA)** web infr
 
 The infrastructure is built in the **eu-north-1 (Stockholm)** region, utilizing two Availability Zones for maximum resilience.
 
+### Visual Blueprint:
 ![Architecture Diagram](architecture-diagram.png)
+*(Is image mein aap VPC, Public/Private Subnets, Load Balancer aur Auto Scaling Group ka pura flow dekh sakte hain)*.
 
 ### Key Components:
 * **VPC:** Custom VPC (`project-3-vpc`) with a `/16` CIDR block.
@@ -28,11 +30,6 @@ The infrastructure is built in the **eu-north-1 (Stockholm)** region, utilizing 
 | **Private** | NAT Gateway | `0.0.0.0/0` -> `nat-1508bf2...` |
 | **Load Balancer** | ALB | Listen on Port 80, Forward to Target Group |
 
-### 2. Elasticity & Monitoring
-* **Auto Scaling:** Configured with a desired capacity of 4 instances across 2 AZs.
-* **Health Checks:** The ALB performs active HTTP health checks on port 80.
-* **CloudWatch:** Custom dashboard monitors **EBS Byte Balance** and **CPU Utilization** to trigger scaling policies.
-
 ---
 
 ## 🧪 Testing & Verification
@@ -45,38 +42,29 @@ Verified that traffic is evenly distributed across both `eu-north-1a` and `eu-no
 The ALB successfully serves the "Server Monitor" dashboard, proving the end-to-end connectivity from the public internet to private instances.
 > **Observation:** Real-time metrics show balanced CPU and Memory usage across the fleet.
 
-### ✅ Secure Asset Retrieval
-Verified that private instances can access the S3 bucket (`project3-bucket-danish`) using the attached IAM Role.
-> **Status:** S3 bucket is active and verified in the Stockholm region.
-
 ---
 
-## 📸 Project Evidence
+## 📸 Project Evidence (Visualized)
 
-<details>
-<summary>Click to view Implementation Screenshots</summary>
-
-#### VPC Resource Mapping
+#### 1. VPC Resource Mapping
 Visualizing the linkage between Subnets, Route Tables, and Network Gateways.
 ![VPC Map](vpc.png)
 
-#### Auto Scaling Group Configuration
+#### 2. Auto Scaling Group Configuration
 Proof of multi-AZ instance management and capacity settings.
 ![ASG Setup](autoscalinggroup.png)
 
-#### Target Group Health Status
+#### 3. Target Group Health Status
 Confirmation that the ALB is successfully monitoring all 4 backend instances.
 ![Health Check](targetgroup.png)
 
-#### CloudWatch Observability
+#### 4. CloudWatch Observability
 Custom dashboard showing performance metrics for the storage layer.
 ![Monitoring](cloudwatch.png)
 
-#### Final Live Web Dashboard
+#### 5. Final Live Web Dashboard
 The end result: A functional, load-balanced application dashboard.
 ![Live Output](output.png)
-
-</details>
 
 ---
 
