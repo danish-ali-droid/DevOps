@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r requirements.txt -t . 2>/dev/null || true
+  
+  pre_build:
+    commands:
+      - echo "Running pre-build checks..."
+      - python -m py_compile lambda_function.py
+  
+  build:
+    commands:
+      - echo "Build completed on $(date)"
+      - echo "Packaging Lambda function..."
+  
+  post_build:
+    commands:
+      - echo "Creating deployment package..."
+      - zip -r lambda-deployment.zip lambda_function.py requirements.txt 2>/dev/null || zip -r lambda-deployment.zip lambda_function.py
+      - echo "Build completed successfully!"
+
+artifacts:
+  files:
+    - lambda-deployment.zip
+    - appspec.yml
+  discard-paths: no
+
+cache:
+  paths:
+    - '/root/.cache/pip/**/*'

@@ -9,7 +9,6 @@ This project demonstrates a highly secure, **Dual-Stack (IPv4/IPv6)** VPC archit
 The infrastructure consists of a custom VPC with both public and private subnets across a single Availability Zone (**eu-north-1a**).
 
 ![Architecture Diagram](architecture-diagram.png)
-*(Is diagram mein Dual-Stack flow aur private instance connectivity ko samjha ja sakta hai)*.
 
 ### Key Components:
 * **VPC:** CIDR `10.0.0.0/16` with Amazon-provided IPv6.
