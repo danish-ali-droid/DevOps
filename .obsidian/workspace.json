@@ -70,7 +70,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -157,13 +158,23 @@
               "icon": "lucide-list",
               "title": "Outline"
             }
+          },
+          {
+            "id": "7f55b3fcb00fb264",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -179,6 +190,10 @@
   },
   "active": "f2c6a90b0d9143f0",
   "lastOpenFiles": [
+    "Amazone_Web_Services/project-5/stop_container.sh",
+    "Amazone_Web_Services/project-5/start_container.sh",
+    "Amazone_Web_Services/project-5/buildspec.yml",
+    "Amazone_Web_Services/project-5/appspec.yml",
     "Amazone Web Services/project-2/README.md",
     "Amazone Web Services/project-2/Private Route Table -> NAT Gateway -> Internet Gateway-tst.png",
     "Amazone Web Services/project-2/README.md~",
