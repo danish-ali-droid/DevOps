@@ -1,4 +1,4 @@
-# 🎓 Student Management System (DevOps Edition)
+# 🎓 Student Management System
 ![Build Status](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 ![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
@@ -36,25 +36,28 @@ The following diagram illustrates how traffic flows through the system:
 git clone [https://github.com/danish-ali-droid/DevOps.git](https://github.com/danish-ali-droid/DevOps.git)
 cd DevOps/Nginx/project/backend
 npm install
-
+```
 2. Environment Setup
 Create a .env file in the backend/ directory:
+```
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_secure_password
 DB_NAME=student_db
 PORT=5000
-
+```
 3. Nginx SSL Setup
 Generate self-signed certificates and link the config:
+```
 # Generate Certs
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-node-app.key -out /etc/ssl/certs/nginx-node-app.crt
 
 # Apply Nginx Config
 sudo ln -s $(pwd)/nginx.conf /etc/nginx/conf.d/project.conf
 sudo nginx -t && sudo systemctl restart nginx
-
+```
 📂 Directory Structure
+```
 .
 ├── backend/
 │   ├── config/          # Database Connection
@@ -65,7 +68,7 @@ sudo nginx -t && sudo systemctl restart nginx
 ├── frontend/            # Client-side Application
 ├── nginx.conf           # Proxy Configuration
 └── .gitignore           # Security Rules
-
+```
 ## 🛠️ Tech Stack
 
 - **Backend:** Node.js, Express.js
