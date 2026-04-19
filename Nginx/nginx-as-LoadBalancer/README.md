@@ -70,8 +70,4 @@ sudo systemctl restart nginx
 **Danish Ali** *IT Student & Aspiring DevOps Engineer*
 
 - **GitHub:** [@danish-ali-droid](https://github.com/danish-ali-droid)
-- **Specialized in:** Linux Administration, Nginx Architecture, & Cloud Infrastructure
 
-> This project is part of a DevOps lab focused on horizontal scaling and server reliability.
-
----

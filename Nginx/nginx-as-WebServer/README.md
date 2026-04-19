@@ -73,8 +73,4 @@ sudo systemctl restart nginx
 **Danish Ali** *IT Student & Aspiring DevOps Engineer*
 
 - **GitHub:** [@danish-ali-droid](https://github.com/danish-ali-droid)
-- **Specialized in:** Linux Administration, Nginx Virtual Hosting
-
-> This project is a practical implementation of hosting multiple services on shared infrastructure, a core skill for any System Administrator or DevOps Engineer.
-
 ---

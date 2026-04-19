@@ -83,8 +83,5 @@ sudo nginx -t && sudo systemctl restart nginx
 **Danish Ali** *IT Student & Cloud Enthusiast*
 
 - **GitHub:** [@danish-ali-droid](https://github.com/danish-ali-droid)
-- **Specialized in:** Linux Administration, DevOps, & Backend Development
-
-> This project was completed as part of a DevOps learning path focusing on secure web server deployments.
 
 ---
