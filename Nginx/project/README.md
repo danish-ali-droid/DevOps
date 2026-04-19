@@ -36,7 +36,6 @@ The following diagram illustrates how traffic flows through the system:
 git clone [https://github.com/danish-ali-droid/DevOps.git](https://github.com/danish-ali-droid/DevOps.git)
 cd DevOps/Nginx/project/backend
 npm install
-
 2. Environment Setup
 Create a .env file in the backend/ directory:
 
@@ -45,19 +44,15 @@ DB_USER=root
 DB_PASSWORD=your_secure_password
 DB_NAME=student_db
 PORT=5000
-
 3. Nginx SSL Setup
 Generate self-signed certificates and link the config:
-
 # Generate Certs
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-node-app.key -out /etc/ssl/certs/nginx-node-app.crt
 
 # Apply Nginx Config
 sudo ln -s $(pwd)/nginx.conf /etc/nginx/conf.d/project.conf
 sudo nginx -t && sudo systemctl restart nginx
-
 📂 Directory Structure
-
 .
 ├── backend/
 │   ├── config/          # Database Connection
@@ -68,24 +63,22 @@ sudo nginx -t && sudo systemctl restart nginx
 ├── frontend/            # Client-side Application
 ├── nginx.conf           # Proxy Configuration
 └── .gitignore           # Security Rules
-
 🛠️ Tech Stack
+Backend: Node.js, Express.js
 
-   1. Backend: Node.js, Express.js
+Database: MySQL
 
-   2. Database: MySQL
+Web Server: Nginx
 
-   3. Web Server: Nginx
+Security: OpenSSL, dotenv
 
-   4. Security: OpenSSL, dotenv
-
-   5. OS: Linux (AlmaLinux / Ubuntu)
+OS: Linux (AlmaLinux / Ubuntu)
 👨‍💻 Author
+Danish Ali
+IT Student & Cloud Enthusiast
 
- Danish Ali
- IT Student & Cloud Enthusiast
- 
- -  GitHub: @danish-ali-droid
+GitHub: @danish-ali-droid
 
- -   Specialized in: Linux, DevOps, & Backend Development
+Specialized in: Linux, DevOps, & Backend Development
 
+This project was completed as part of a DevOps learning path focusing on secure web server deployments.
