@@ -63,16 +63,19 @@ sudo nginx -t && sudo systemctl restart nginx
 ├── frontend/            # Client-side Application
 ├── nginx.conf           # Proxy Configuration
 └── .gitignore           # Security Rules
+
 🛠️ Tech Stack
-Backend: Node.js, Express.js
 
-Database: MySQL
+1. Backend: Node.js, Express.js
 
-Web Server: Nginx
+2. Database: MySQL
 
-Security: OpenSSL, dotenv
+3. Web Server: Nginx
 
-OS: Linux (AlmaLinux / Ubuntu)
+4. Security: OpenSSL, dotenv
+
+5. OS: Linux (AlmaLinux / Ubuntu)
+
 👨‍💻 Author
 Danish Ali
 IT Student & Cloud Enthusiast
