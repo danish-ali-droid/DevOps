@@ -9,7 +9,7 @@ Welcome to my specialized Nginx repository. This is not just a collection of fil
 
 ## 🏛️ Comprehensive Architectural Patterns
 
-### 1. 🚀 [The Full-Stack Revese Proxy Server ](./nginx-as-ReverseProxyServer)
+### 1. 🚀 [The Full-Stack Revese Proxy  ](./nginx-as-ReverseProxyServer)
 *Focus: Security, SSL Termination, and Reverse Proxying*
 This is the flagship project where Nginx acts as a secure gateway for a multi-tier application.
 - **Backend Integration:** Nginx proxies requests to a **Node.js** API while masking the internal port (5000).
@@ -50,7 +50,7 @@ Nginx/
 │   └── nginx-sites/         # Virtual Host Mapping (.conf files)
 └── notes/                   # CLI Cheatsheets & Troubleshooting Docs
 ```
-🛠️ Core DevOps Competencies Demonstrated
+## 🛠️ Core DevOps Competencies Demonstrated
 
 1.Traffic Control: Managing headers (X-Real-IP, X-Forwarded-For) to maintain client visibility through the proxy.
 2. Security Hardening: Implementing SSL/TLS and using .gitignore to protect sensitive .key and .env files.
@@ -74,13 +74,13 @@ On AlmaLinux / RHEL / Amazon Linux:
 sudo yum update -y
 sudo yum install nginx -y
 ```
-2. Basic Configuration Setup
+### 2. Basic Configuration Setup
 Start and enable the Nginx service to ensure it runs on boot:
 ```Bash
 sudo systemctl start nginx
 sudo systemctl enable nginx
 ```
-3. Deploying Custom Configurations
+### 3. Deploying Custom Configurations
 To apply the configurations from this repository:
 ```Bash
 # Copy configuration to the Nginx directory
@@ -92,7 +92,7 @@ sudo nginx -t
 # Reload Nginx to apply changes without dropping connections
 sudo systemctl reload nginx
 ```
-4. Firewall Configuration
+### 4. Firewall Configuration
 Ensure traffic is allowed on HTTP (80) and HTTPS (443) ports:
 ```Bash
 # For Ubuntu (UFW)
