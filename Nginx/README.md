@@ -52,7 +52,7 @@ Nginx/
 ```
 ## 🛠️ Core DevOps Competencies Demonstrated
 
-1.Traffic Control: Managing headers (X-Real-IP, X-Forwarded-For) to maintain client visibility through the proxy.
+1. Traffic Control: Managing headers (X-Real-IP, X-Forwarded-For) to maintain client visibility through the proxy.
 2. Security Hardening: Implementing SSL/TLS and using .gitignore to protect sensitive .key and .env files.
 
 3. Performance: Understanding the Nginx Event-Loop model and how it handles concurrent connections.
