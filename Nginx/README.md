@@ -9,7 +9,7 @@ Welcome to my specialized Nginx repository. This is not just a collection of fil
 
 ## 🏛️ Comprehensive Architectural Patterns
 
-### 1. 🚀 [The Full-Stack Secure Project](./nginx-as-ProxyServer)
+### 1. 🚀 [The Full-Stack Revese Proxy Server ](./nginx-as-ReverseProxyServer)
 *Focus: Security, SSL Termination, and Reverse Proxying*
 This is the flagship project where Nginx acts as a secure gateway for a multi-tier application.
 - **Backend Integration:** Nginx proxies requests to a **Node.js** API while masking the internal port (5000).
@@ -38,7 +38,7 @@ How to host multiple business domains on a single hardware resource without reso
 ## 📂 Technical Directory Structure
 ```bash
 Nginx/
-├── project/                 # High-Security 2-Tier Application
+├── nginx-as-ReverseProxyServer/                 # High-Security 2-Tier Application
 │   ├── backend/             # MVC Pattern API (Express.js)
 │   ├── frontend/            # Client-side Logic
 │   └── nginx.conf           # SSL Handshake & Proxy Rules
@@ -58,7 +58,50 @@ Nginx/
 3. Performance: Understanding the Nginx Event-Loop model and how it handles concurrent connections.
 
 4. System Administration: Manual deployment on Linux (Ubuntu/AlmaLinux), managing services with systemctl, and debugging with journalctl.
+---
 
+## 🛠️ Installation & Configuration of Nginx
+
+### 1. Install Nginx
+Run the command based on your Linux distribution:
+**On Ubuntu / Debian:**
+```bash
+sudo apt update
+sudo apt install nginx -y
+```
+On AlmaLinux / RHEL / Amazon Linux:
+```Bash
+sudo yum update -y
+sudo yum install nginx -y
+```
+2. Basic Configuration Setup
+Start and enable the Nginx service to ensure it runs on boot:
+```Bash
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+3. Deploying Custom Configurations
+To apply the configurations from this repository:
+```Bash
+# Copy configuration to the Nginx directory
+sudo cp nginx-sites/*.conf /etc/nginx/conf.d/
+
+# Validate syntax (Critical Step!)
+sudo nginx -t
+
+# Reload Nginx to apply changes without dropping connections
+sudo systemctl reload nginx
+```
+4. Firewall Configuration
+Ensure traffic is allowed on HTTP (80) and HTTPS (443) ports:
+```Bash
+# For Ubuntu (UFW)
+sudo ufw allow 'Nginx Full'
+
+# For RHEL/AlmaLinux (Firewalld)
+sudo firewall-cmd --permanent --add-service={http,https}
+sudo firewall-cmd --reload
+```
 ## 👨‍💻 Author
 **Danish Ali** *BS Information Technology Student | Aspiring DevOps & Cloud Engineer*
 
