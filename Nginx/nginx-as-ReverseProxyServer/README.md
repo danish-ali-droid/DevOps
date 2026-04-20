@@ -22,10 +22,10 @@ The following diagram illustrates how traffic flows through the system:
 
 
 
-1. **User** requests the site via `https://192.168.11.108`.
-2. **Nginx** (Port 443) terminates SSL and routes traffic.
-3. **Static Files** are served for the Frontend.
-4. **API Calls** are proxied to the Node.js backend (Port 5000).
+- **User** requests the site via `https://192.168.11.108`.
+- **Nginx** (Port 443) terminates SSL and routes traffic.
+- **Static Files** are served for the Frontend.
+- **API Calls** are proxied to the Node.js backend (Port 5000).
 
 ---
 
@@ -37,18 +37,18 @@ git clone [https://github.com/danish-ali-droid/DevOps.git](https://github.com/da
 cd DevOps/Nginx/project/backend
 npm install
 ```
-2. Environment Setup
+### 2. Environment Setup
 Create a .env file in the backend/ directory:
-```
+```Bash
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_secure_password
 DB_NAME=student_db
 PORT=5000
 ```
-3. Nginx SSL Setup
+### 3. Nginx SSL Setup
 Generate self-signed certificates and link the config:
-```
+```Bash
 # Generate Certs
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-node-app.key -out /etc/ssl/certs/nginx-node-app.crt
 
@@ -56,8 +56,8 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/privat
 sudo ln -s $(pwd)/nginx.conf /etc/nginx/conf.d/project.conf
 sudo nginx -t && sudo systemctl restart nginx
 ```
-📂 Directory Structure
-```
+## 📂 Directory Structure
+```Text
 .
 ├── backend/
 │   ├── config/          # Database Connection

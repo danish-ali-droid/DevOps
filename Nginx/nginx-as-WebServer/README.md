@@ -31,7 +31,7 @@ nginx-webhosting/
 │   └── site3.conf      # Port/Domain settings for Site 3
 └── README.md           # Documentation
 ```
-⚙️ Configuration Logic
+## ⚙️ Configuration Logic
 Each configuration file follows a professional template to ensure clean routing:
 ```Nginx
 server {
@@ -47,13 +47,13 @@ server {
     }
 }
 ```
-🚀 Deployment Guide
-1. Local DNS Setup
+## 🚀 Deployment Guide
+### 1. Local DNS Setup
 To simulate real domains, add these to your /etc/hosts file:
 ```Bash
 127.0.0.1 site1.local site2.local site3.local
 ```
-2. Linking & Validation
+### 2. Linking & Validation
 Enable the sites by linking them to Nginx's active configuration directory:
 ```Bash
 # Create Symbolic Links
@@ -65,10 +65,10 @@ sudo nginx -t
 # Apply Changes
 sudo systemctl restart nginx
 ```
-🔒 Best Practices Implemented
-1. Modular Configs: Instead of editing the main nginx.conf, we use the conf.d approach.
-2. Error Handling: Custom 404 logic can be added per site.
-3. Permission Management: Ensuring the Nginx user has appropriate read access to the project directories.
+## 🔒 Best Practices Implemented
+- Modular Configs: Instead of editing the main nginx.conf, we use the conf.d approach.
+- Error Handling: Custom 404 logic can be added per site.
+- Permission Management: Ensuring the Nginx user has appropriate read access to the project directories.
 ## 👨‍💻 Author
 **Danish Ali** *IT Student & Aspiring DevOps Engineer*
 

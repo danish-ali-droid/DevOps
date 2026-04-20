@@ -39,14 +39,14 @@ server {
     }
 }
 ```
-🚀 Key Learning Objectives
+## 🚀 Key Learning Objectives
 
-1. Reverse Proxying: Routing client requests to the appropriate backend.
-2. Upstream Module: Defining groups of servers to share the load.
-3. Health Checks: Basic understanding of how Nginx handles server availability.
-4. Weighted Load Balancing: Prioritizing more powerful servers by assigning weights.
+- Reverse Proxying: Routing client requests to the appropriate backend.
+- Upstream Module: Defining groups of servers to share the load.
+- Health Checks: Basic understanding of how Nginx handles server availability.
+- Weighted Load Balancing: Prioritizing more powerful servers by assigning weights.
 
-📂 Project Structure
+## 📂 Project Structure
 ```text
 nginx-loadbalancer/
 ├── nginx.conf          # Load Balancer rules & Upstream blocks
@@ -56,16 +56,16 @@ nginx-loadbalancer/
 │   └── backend3.js     # Server instance 3
 └── README.md           # Documentation
 ```
-🛠️ How to Test
+## 🛠️ How to Test
 
-1. Start Backend Servers: Ensure your backend services are running on the ports defined in the upstream block.
-2. Apply Nginx Config:
+- Start Backend Servers: Ensure your backend services are running on the ports defined in the upstream block.
+- Apply Nginx Config:
 ```bash
 sudo cp nginx.conf /etc/nginx/conf.d/load-balancer.conf
 sudo nginx -t
 sudo systemctl restart nginx
 ```
-3. Verify: Refresh your browser multiple times and observe how requests are served by different backend instances.
+- Verify: Refresh your browser multiple times and observe how requests are served by different backend instances.
 ## 👨‍💻 Author
 **Danish Ali** *IT Student & Aspiring DevOps Engineer*
 
