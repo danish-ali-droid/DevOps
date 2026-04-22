@@ -34,8 +34,8 @@ const StudentForm = ({ student, onClose }) => {
         setError('');
 
         const url = student 
-            ? `http://192.168.11.108/api/students/${student.id}`
-            : 'http://192.168.11.108/api/students';
+            ? `http://127.0.0.1:5000/api/students/${student.id}`
+            : 'http://127.0.0.1:5000/api/students';
         
         const method = student ? 'PUT' : 'POST';
 

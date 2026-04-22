@@ -14,7 +14,7 @@ function App() {
 
     const fetchStudents = async () => {
         try {
-            const response = await fetch('https://192.168.11.108/api/students');
+            const response = await fetch('https://127.0.0.1/api/students');
             const data = await response.json();
             setStudents(data);
         } catch (error) {
@@ -35,7 +35,7 @@ function App() {
     const handleDeleteStudent = async (id) => {
         if (window.confirm('Are you sure you want to delete this student?')) {
             try {
-                await fetch(`https://192.168.11.108/api/students/${id}`, {
+                await fetch(`https://127.0.0.1/api/students/${id}`, {
                     method: 'DELETE'
                 });
                 fetchStudents();
