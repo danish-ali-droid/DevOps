@@ -45,7 +45,7 @@ Docker/nginx-node-mariadb/
 ├── docker-compose.yml       # The Orchestrator
 └── .env                     # Database Credentials
 ```
-## 🛠️ Step-by-Step Deployment Guide
+## 🛠️ Step-by-Step Deployment 
 
 ### 1. Prerequisites
 Ensure you have the following installed on your host system:
