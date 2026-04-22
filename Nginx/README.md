@@ -102,7 +102,4 @@ sudo ufw allow 'Nginx Full'
 sudo firewall-cmd --permanent --add-service={http,https}
 sudo firewall-cmd --reload
 ```
-## 👨‍💻 Author
-**Danish Ali** *BS Information Technology Student | Aspiring DevOps & Cloud Engineer*
 
-- **GitHub:** [@danish-ali-droid](https://github.com/danish-ali-droid)

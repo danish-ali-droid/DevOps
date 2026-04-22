@@ -79,9 +79,3 @@ sudo nginx -t && sudo systemctl restart nginx
 
 ---
 
-## 👨‍💻 Author
-**Danish Ali** *IT Student & Cloud Enthusiast*
-
-- **GitHub:** [@danish-ali-droid](https://github.com/danish-ali-droid)
-
----

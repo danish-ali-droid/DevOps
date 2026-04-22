@@ -69,8 +69,4 @@ sudo systemctl restart nginx
 - Modular Configs: Instead of editing the main nginx.conf, we use the conf.d approach.
 - Error Handling: Custom 404 logic can be added per site.
 - Permission Management: Ensuring the Nginx user has appropriate read access to the project directories.
-## 👨‍💻 Author
-**Danish Ali** *IT Student & Aspiring DevOps Engineer*
 
-- **GitHub:** [@danish-ali-droid](https://github.com/danish-ali-droid)
----

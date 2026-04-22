@@ -66,8 +66,4 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 - Verify: Refresh your browser multiple times and observe how requests are served by different backend instances.
-## 👨‍💻 Author
-**Danish Ali** *IT Student & Aspiring DevOps Engineer*
-
-- **GitHub:** [@danish-ali-droid](https://github.com/danish-ali-droid)
 
