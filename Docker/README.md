@@ -39,11 +39,11 @@ An optimized **Two-Tier Architecture**.
 Docker/
 ├── nginx-node-mariadb/      # 3-Tier Enterprise Microservices
 ├── nginx-node-express/      # 2-Tier High-Performance Proxy-App
-├── notes/                   # Technical Deep-Dive PDF Modules
-│   ├── Architecture_Core.pdf       # Engine internals & Namespaces
-│   ├── Container_Lifecycle.pdf     # Networking & State Management
-│   ├── Image_Optimization.pdf      # Multi-stage builds & .dockerignore
-│   └── Security_Registry.pdf       # Non-root users & Vulnerability scans
+├── Architecture_Core.pdf    # Engine internals & Namespaces
+├── Architecture_Core.pdf    # Engine internals & Namespaces
+├── Container_Lifecycle.pdf  # Networking & State Management
+├── Image_Optimization.pdf   # Multi-stage builds & .dockerignore
+│── Security_Registry.pdf    # Non-root users & Vulnerability scans
 └── README.md                # Master Documentation
 ```
 ---
